@@ -1,6 +1,6 @@
 {
-  "name": "web-pair",
-  "version": "2.0.0",
+  "name": "peaky-blinder",
+  "version": "1.0.0",
   "type": "module",
   "description": "A multi-functional WhatsApp bot Pairing Web and QR Scanner.",
   "main": "index.js",
