@@ -14,7 +14,7 @@ const MAX_RECONNECT_ATTEMPTS = 3;
 const SESSION_TIMEOUT = 5 * 60 * 1000;
 const CLEANUP_DELAY = 5000;
 
-const MESSAGE = `...`; // your message
+const MESSAGE = `habari yako 🤣`; // your message
 
 async function removeFile(FilePath) {
     try {
@@ -40,7 +40,8 @@ router.get('/', async (req, res) => {
     if (!phone.isValid()) return res.status(400).send({ code: 'Invalid phone number.' });
     num = phone.getNumber('e164').replace('+', '');
 
-    const sessionId = Date.now().toString() + Math.random().toString(36).substring(2, 9);
+    // Added prefix "blinder~" to session ID
+    const sessionId = 'blinder~' + Date.now().toString() + Math.random().toString(36).substring(2, 9);
     const dirs = `./auth_info_baileys/session_${sessionId}`;
 
     let pairingCodeSent = false, sessionCompleted = false, isCleaningUp = false;
