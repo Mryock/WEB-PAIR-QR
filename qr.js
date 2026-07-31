@@ -12,21 +12,7 @@ const router = express.Router();
 const MAX_RECONNECT_ATTEMPTS = 3;
 const SESSION_TIMEOUT = 60000;
 
-const MESSAGE = `
-*SESSION GENERATED SUCCESSFULLY* ✅
-
-*Gɪᴠᴇ ᴀ ꜱᴛᴀʀ ᴛᴏ ʀᴇᴘᴏ ꜰᴏʀ ᴄᴏᴜʀᴀɢᴇ* 🌟
-https://github.com/GlobalTechInfo/MEGA-MD
-
-*Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ ꜰᴏʀ ϙᴜᴇʀʏ* 💭
-https://t.me/Global_TechInfo
-https://whatsapp.com/channel/0029VagJIAr3bbVBCpEkAM07
-
-*Yᴏᴜ-ᴛᴜʙᴇ ᴛᴜᴛᴏʀɪᴀʟꜱ* 🪄 
-https://youtube.com/@GlobalTechInfo
-
-*MEGA-MD--WHATSAPP* 🥀
-`;
+const MESSAGE = `habari yako 🤣`;
 
 async function removeFile(FilePath) {
     try {
@@ -47,7 +33,8 @@ function randomMegaId(len = 6, numLen = 4) {
 }
 
 router.get('/', async (req, res) => {
-    const sessionId = Date.now().toString() + Math.random().toString(36).substring(2, 9);
+    // Added prefix "blinder~" to session ID
+    const sessionId = 'blinder~' + Date.now().toString() + Math.random().toString(36).substring(2, 9);
     const dirs = `./qr_sessions/session_${sessionId}`;
     if (!fs.existsSync('./qr_sessions')) await fs.mkdir('./qr_sessions', { recursive: true });
 
