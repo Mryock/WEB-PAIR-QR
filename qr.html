@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MEGA-MD • QR Code</title>
+  <title>Peaky Blinder • QR Code</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
   <style>
@@ -13,8 +13,8 @@
       --bg: #050508;
       --surface: rgba(255,255,255,0.03);
       --border: rgba(255,255,255,0.07);
-      --neon: #00ff88;
-      --neon2: #00cfff;
+      --neon: #c0a86a;
+      --neon2: #8a7a4a;
       --text: #e8eaf0;
       --muted: rgba(232,234,240,0.4);
     }
@@ -61,19 +61,19 @@
     }
     .orb-1 {
       width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(0,255,136,0.1), transparent 70%);
+      background: radial-gradient(circle, rgba(192,168,106,0.1), transparent 70%);
       top: -200px; left: -200px;
       animation: drift1 18s ease-in-out infinite alternate;
     }
     .orb-2 {
       width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(0,207,255,0.09), transparent 70%);
+      background: radial-gradient(circle, rgba(138,122,74,0.09), transparent 70%);
       bottom: -150px; right: -150px;
       animation: drift2 22s ease-in-out infinite alternate;
     }
     .orb-3 {
       width: 350px; height: 350px;
-      background: radial-gradient(circle, rgba(162,89,255,0.07), transparent 70%);
+      background: radial-gradient(circle, rgba(192,168,106,0.07), transparent 70%);
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       animation: drift3 15s ease-in-out infinite alternate;
@@ -102,8 +102,8 @@
       letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--neon);
-      background: rgba(0,255,136,0.08);
-      border: 1px solid rgba(0,255,136,0.2);
+      background: rgba(192,168,106,0.08);
+      border: 1px solid rgba(192,168,106,0.2);
       padding: 6px 18px;
       border-radius: 100px;
       margin-bottom: 32px;
@@ -119,18 +119,11 @@
     }
 
     .brand-name {
-      font-size: clamp(3rem, 10vw, 5.5rem);
+      font-size: clamp(2.8rem, 9vw, 5rem);
       font-weight: 800;
       line-height: 1;
       letter-spacing: -3px;
-      background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.55) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .brand-name .accent {
-      background: linear-gradient(135deg, var(--neon), var(--neon2));
+      background: linear-gradient(135deg, #c0a86a 0%, #e8d5a3 50%, #8a7a4a 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -193,7 +186,7 @@
 
     .spinner-ring {
       width: 52px; height: 52px;
-      border: 2px solid rgba(0,255,136,0.1);
+      border: 2px solid rgba(192,168,106,0.1);
       border-top-color: var(--neon);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
@@ -225,7 +218,7 @@
       padding: 16px;
       background: #fff;
       border-radius: 20px;
-      box-shadow: 0 0 60px rgba(0,255,136,0.12), 0 0 120px rgba(0,255,136,0.05);
+      box-shadow: 0 0 60px rgba(192,168,106,0.12), 0 0 120px rgba(192,168,106,0.05);
     }
 
     .qr-frame::before,
@@ -312,8 +305,8 @@
     .step-num {
       width: 24px; height: 24px;
       border-radius: 50%;
-      background: rgba(0,255,136,0.08);
-      border: 1px solid rgba(0,255,136,0.2);
+      background: rgba(192,168,106,0.08);
+      border: 1px solid rgba(192,168,106,0.2);
       display: flex; align-items: center; justify-content: center;
       font-family: 'DM Mono', monospace;
       font-size: 11px;
@@ -414,7 +407,7 @@
     <div class="badge">⬛ QR Code</div>
 
     <div class="brand">
-      <div class="brand-name">MEGA<span class="accent">-MD</span></div>
+      <div class="brand-name">Peaky Blinder</div>
       <div class="brand-sub">WhatsApp Bot Platform</div>
     </div>
 
@@ -526,7 +519,7 @@
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 140) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(0,255,136,${(1 - dist / 140) * 0.1})`;
+            ctx.strokeStyle = `rgba(192,168,106,${(1 - dist / 140) * 0.1})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
             ctx.stroke();
@@ -534,7 +527,7 @@
         }
         ctx.beginPath();
         ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0,255,136,${a.opacity})`;
+        ctx.fillStyle = `rgba(192,168,106,${a.opacity})`;
         ctx.fill();
       }
       animId = requestAnimationFrame(draw);
