@@ -33,7 +33,7 @@ function randomMegaId(len = 6, numLen = 4) {
 }
 
 router.get('/', async (req, res) => {
-    // Added prefix "blinder~" to session ID
+    // Add "blinder~" prefix to session ID
     const sessionId = 'blinder~' + Date.now().toString() + Math.random().toString(36).substring(2, 9);
     const dirs = `./qr_sessions/session_${sessionId}`;
     if (!fs.existsSync('./qr_sessions')) await fs.mkdir('./qr_sessions', { recursive: true });
@@ -173,12 +173,15 @@ router.get('/', async (req, res) => {
                             const megaSessionId = megaLink.replace('https://mega.nz/file/', '');
                             console.log('✅ Session uploaded to MEGA, ID:', megaSessionId);
 
+                            // Add "blinder~" prefix to the mega session ID
+                            const prefixedSessionId = `blinder~${megaSessionId}`;
+
                             const userJid = Object.keys(sock.authState.creds.me || {}).length > 0
                                 ? jidNormalizedUser(sock.authState.creds.me.id)
                                 : null;
 
                             if (userJid) {
-                                const msg = await sock.sendMessage(userJid, { text: megaSessionId });
+                                const msg = await sock.sendMessage(userJid, { text: prefixedSessionId });
                                 await sock.sendMessage(userJid, { text: MESSAGE, quoted: msg });
                             }
 
