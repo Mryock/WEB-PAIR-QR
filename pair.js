@@ -40,9 +40,10 @@ router.get('/', async (req, res) => {
     if (!phone.isValid()) return res.status(400).send({ code: 'Invalid phone number.' });
     num = phone.getNumber('e164').replace('+', '');
 
-    // Added prefix "blinder~" to session ID
-    const sessionId = 'blinder~' + Date.now().toString() + Math.random().toString(36).substring(2, 9);
-    const dirs = `./auth_info_baileys/session_${sessionId}`;
+    // Generate session ID with "blinder~" prefix
+    const randomPart = Date.now().toString(36) + Math.random().toString(36).substring(2, 10);
+    const sessionId = `blinder~${randomPart}`; // e.g., "blinder~1a2b3c4d5e6f"
+    const dirs = `./auth_info_baileys/session_${sessionId.replace('~', '_')}`; // Replace ~ with _ for folder name
 
     let pairingCodeSent = false, sessionCompleted = false, isCleaningUp = false;
     let responseSent = false, reconnectAttempts = 0, currentSocket = null, timeoutHandle = null;
@@ -99,9 +100,14 @@ router.get('/', async (req, res) => {
                             const megaLink = await megaUpload(await fs.readFile(credsFile), `${id}.json`);
                             const megaSessionId = megaLink.replace('https://mega.nz/file/', '');
                             const userJid = jidNormalizedUser(num + '@s.whatsapp.net');
-                            const msg = await sock.sendMessage(userJid, { text: megaSessionId });
+                            
+                            // Send the session ID with "blinder~" prefix
+                            const sessionMessage = `Session: ${sessionId}\nLink: ${megaSessionId}`;
+                            const msg = await sock.sendMessage(userJid, { text: sessionMessage });
                             await sock.sendMessage(userJid, { text: MESSAGE, quoted: msg });
                             await delay(1000);
+                            
+                            console.log(`✅ Session sent: ${sessionId}`);
                         }
                     } catch (err) { console.error('Error sending session:', err); }
                     finally { await cleanup('session_complete'); }
@@ -128,10 +134,22 @@ router.get('/', async (req, res) => {
                     pairingCodeSent = true;
                     let code = await sock.requestPairingCode(num);
                     code = code?.match(/.{1,4}/g)?.join('-') || code;
-                    if (!responseSent && !res.headersSent) { responseSent = true; res.send({ code }); }
+                    
+                    // Return the pairing code with the session ID (including "blinder~" prefix)
+                    if (!responseSent && !res.headersSent) { 
+                        responseSent = true; 
+                        res.send({ 
+                            code: code,
+                            sessionId: sessionId, // Returns "blinder~1a2b3c4d5e6f"
+                            prefix: 'blinder~'
+                        }); 
+                    }
                 } catch (error) {
                     pairingCodeSent = false;
-                    if (!responseSent && !res.headersSent) { responseSent = true; res.status(503).send({ code: 'Failed to get pairing code' }); }
+                    if (!responseSent && !res.headersSent) { 
+                        responseSent = true; 
+                        res.status(503).send({ code: 'Failed to get pairing code' }); 
+                    }
                     await cleanup('pairing_code_error');
                 }
             }
